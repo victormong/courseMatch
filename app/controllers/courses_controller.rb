@@ -28,7 +28,7 @@ class CoursesController < ApplicationController
     end
   end
 
-  def recommend
+  def recommendations
     @user= current_user
   end
 

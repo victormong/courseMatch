@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   resources :courses do
     collection {get 'search'}
     collection {post :import}
+    collection {get 'recommendations'}
     resources :ratings, except: [:index,:show]
 
   end
 
-  get 'recommendations' => 'courses#recommend'
+ # get 'recommendations' => 'courses#recommend'
 
   devise_for :users
 
