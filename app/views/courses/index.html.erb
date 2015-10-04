@@ -1,0 +1,41 @@
+<% if user_signed_in? %>
+<h2>Courses</h2>
+<div class="container">
+	<div>
+		<%= will_paginate @courses ,class: "center page_links"%>
+		<br>
+	</div>
+	<div class="row">
+		<% @courses.each do |course| %>
+			<div class="col-md-3">
+				<div class="thumbnail">
+					<%= image_tag course.image_url, alt: "Course Image" %>
+					<div class="caption">
+						<p><%=link_to course.name, course_path(course)%></p>
+					</div>
+					<br>
+				</div>
+			</div>
+		<% end %>
+	</div>
+	<div>
+		<%= will_paginate @courses ,class: "center page_links"%>
+	</div>
+</div>
+<% else %>
+	<div class="container center">
+		<div class="jumbotron">
+			<h2> Welcome to CourseMatch</h2>
+			<br>
+			<p class="tag">Find online courses with ease.Start Learning</p>
+			<p>
+				<%= link_to "Log in", new_user_session_path, class: "btn btn-lg user-links" %>
+				<%= link_to "Sign up", new_user_registration_path, class: "btn btn-lg user-links" %>
+			</p>
+<% end %>
+
+<!-- <h4>Import</h4>
+	<%= form_tag import_courses_path, multipart: true do %>
+		<%= file_field_tag :file %>
+		<%= submit_tag "Import" %>
+	<% end %> -->

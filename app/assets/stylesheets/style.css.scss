@@ -1,0 +1,56 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+$link-hover-color: #ff0000;
+
+
+.form-control{
+	width:40%;
+}
+@font-face {
+        font-family: "Source Sans Pro";
+        src: url(/assets/SourceSansPro-Regular.ttf) format("truetype");
+    }
+.user-links{
+	background:#fff;
+	color:#000000;
+}
+.btn-lg{
+	&:hover{
+		background:#fff;
+		color:#000000;
+	}
+}
+
+body{
+	font-family: "SourceSansPro", sans-serif;
+}
+.center{
+	text-align: center;
+}
+
+a:hover{
+	background: none;
+}
+.page_links{
+	font-size: 1.6em;
+}
+.jumbotron{
+	background:#2B4C7E;
+	color: #fff;
+	h2{
+		font-size: 36px;
+	}
+	p{
+		tag{
+			font-size: 24px;
+		}
+	}
+}
+.course-box{
+	width:250px;
+	height:120px;
+	background:#2980b9;
+}
+

@@ -1,0 +1,4 @@
+require 'csv'
+CSV.foreach('dataset.csv') do |course|
+	puts course.inspect
+end

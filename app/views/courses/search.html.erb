@@ -1,0 +1,66 @@
+<h2>Courses</h2>
+<div class="container">
+
+  <!-- Nav tabs -->
+  <div class="container col-md-offset-4">
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#beginner" aria-controls="home" role="tab" data-toggle="tab">Beginner</a></li>
+	    <li role="presentation"><a href="#intermediate" aria-controls="profile" role="tab" data-toggle="tab">Intermediate</a></li>
+	    <li role="presentation"><a href="#advanced" aria-controls="messages" role="tab" data-toggle="tab">Advanced</a></li>
+	    
+	  </ul>
+  </div>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="beginner">
+    	<div class="row">
+			<div class="col-md-12">
+				<br>
+				<% @beginner_courses.each do |course| %>
+					<div class="col-md-3">
+						<div class="thumbnail">
+							<p><%= course.key %></p>
+							<p><%=link_to course.name, course_path(course)%></p>
+							<br>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="intermediate">
+    	<div class="row">
+			<div class="col-md-12">
+				<br>
+				<% @intermediate_courses.each do |course| %>
+					<div class="col-md-3">
+						<div class="thumbnail">
+							<p><%= course.key %></p>
+							<p><%=link_to course.name, course_path(course)%></p>
+							<br>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="advanced">
+    	<div class="row">
+    		<div class="col-md-12">
+    			<br>
+				<% @advanced_courses.each do |course| %>
+					<div class="col-md-3">
+						<div class="thumbnail">
+							<p><%= course.key %></p>
+							<p><%=link_to course.name, course_path(course)%></p>
+							<br>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+
+    </div>
+  </div>
+ </div> <!-- container -->
