@@ -1,6 +1,7 @@
+require 'json'
 class CoursesController < ApplicationController
-
-  before_filter :authenticate_user! , only: [:recommend]
+  @@user_data = Hash.new()
+  before_filter :authenticate_user! , only: [:recommendations]
 
   def search
     if params[:search].present?
@@ -30,6 +31,30 @@ class CoursesController < ApplicationController
 
   def recommendations
     @user= current_user
+    @ratings = Rating.all
+    @@user_data = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
+    @ratings.each do |rating|
+        #Have to add logic to populate a nested hash and find recommendations
+
+        #populating the inner hash
+        @rated_course = rating.course
+        @rated_user = rating.user
+
+        @@user_data[@rated_user.username][@rated_course.name] = rating.rate.to_f
+    end
+    @ratings_seen = @@user_data
+    
+    #@@ratings_seen is a nested hash.To convert it into a dictionary,replace every hash_rocket with colon using GSUB
+
+    `python collaborative_filtering.py @@user_data.to_s.gsub("=>",":") @user.username`
+
+    #Read from recommendations.txt and find the courses to recommend
+    @courses = []
+    File.foreach("recommendations.txt") do |line|
+      @course = Course.find_by(name: line.strip)
+      @courses << @course
+    end
+
   end
 
   def import 

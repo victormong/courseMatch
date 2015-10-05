@@ -3,7 +3,6 @@ class Course < ActiveRecord::Base
   	friendly_id :name, use: [:slugged, :finders]
   	searchkick
 	require 'csv'
-
 	
 	def self.import(file)
 		CSV.foreach(file.path, headers: true) do |row|
