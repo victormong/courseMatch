@@ -4,7 +4,8 @@ class CoursesController < ApplicationController
   before_filter :authenticate_user! , only: [:recommendations]
 
   def search
-    if params[:search].present?
+    if params[:search].present? 
+
       @beginner_courses = Course.search(params[:search], where: {level: "beginner"},order: {_score: :desc})
       @intermediate_courses = Course.search(params[:search], where: {level: "intermediate"},order: {_score: :desc})
       @advanced_courses = Course.search(params[:search], where: {level: "advanced"},order: {_score: :desc})
@@ -34,19 +35,21 @@ class CoursesController < ApplicationController
     @ratings = Rating.all
     @@user_data = Hash.new {|h,k| h[k] = Hash.new(&h.default_proc) }
     @ratings.each do |rating|
-        #Have to add logic to populate a nested hash and find recommendations
-
         #populating the inner hash
-        @rated_course = rating.course
-        @rated_user = rating.user
 
-        @@user_data[@rated_user.username][@rated_course.name] = rating.rate.to_f
+        @rated_course = rating.course
+        @user_who_rated = rating.user
+
+        @@user_data[@user_who_rated.username][@rated_course.name] = rating.rate.to_f
     end
     @ratings_seen = @@user_data
     
-    #@@ratings_seen is a nested hash.To convert it into a dictionary,replace every hash_rocket with colon using GSUB
+    #@ratings_seen is a nested hash.To convert it into a python dictionary,replace every hash_rocket with colon using GSUB
+    dict = @ratings_seen.to_s.gsub("=>",":")
+    user = @user.username
+    #system("python collaborative_filtering.py dict user")
+    system("python collaborative_filtering.py #{dict} #{user}")
 
-    `python collaborative_filtering.py @@user_data.to_s.gsub("=>",":") @user.username`
 
     #Read from recommendations.txt and find the courses to recommend
     @courses = []
@@ -54,11 +57,22 @@ class CoursesController < ApplicationController
       @course = Course.find_by(name: line.strip)
       @courses << @course
     end
+    ## To find the courses which have a rating of two or more
+    if @courses.nil?
 
+      @courses_ids = Rating.select(:course_id).distinct
+      @courses_ids.each do |course_id|
+        @popular_courses << Course.find(course_id)
+    end
+   # @most_rated_courses = Rating.all.where(course_id.count >2) do |rating|
+    #  @popular_courses << rating.course
+    #end
   end
 
+  private
+
   def import 
-  	Course.import(params[:file])
-  	redirect_to root_url, notice: "Data added to database"
+    Course.import(params[:file])
+    redirect_to root_url, notice: "Data added to database"
   end
 end

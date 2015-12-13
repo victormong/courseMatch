@@ -1,5 +1,3 @@
-Intro to Computer Science
-How to create <anything> in Android
-How to Use Git and GitHub
-Gradle for Android and Java
-Android Wear Development
+Intro to Relational Databases
+Google Play Services: AdMob
+Android Auto Development

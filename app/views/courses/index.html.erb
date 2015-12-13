@@ -9,7 +9,7 @@
 		<% @courses.each do |course| %>
 			<div class="col-md-3">
 				<div class="thumbnail">
-					<%= image_tag course.image_url, alt: "Course Image" %>
+					<%= link_to (image_tag course.image_url, alt: "Course Image"), course_path(course)%>
 					<div class="caption">
 						<p><%=link_to course.name, course_path(course)%></p>
 					</div>

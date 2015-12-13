@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			
-			<p><%= @course.level.capitalize %></p>
+			<h3>Level:&nbsp;&nbsp;<h4><em><%= @course.level.capitalize %></em></h4></h3>
 			<h2>Course Description</h2>
 			<p><%= simple_format(@course.summary) %></p>
 		</div>
@@ -24,7 +24,9 @@
 	</div> <!--row -->
 	<br>
 	<div class="container center">
-		<%= link_to "Write a new review", new_course_rating_path(@course) ,class: "btn-lg btn btn-danger"%>
+		<%= link_to new_course_rating_path(@course),class: "btn-lg btn btn-danger" do %>
+		 <span class="glyphicon glyphicon-pencil"></span>&nbsp;Write a new review&nbsp;
+		<% end %>
 	</div>
 	<div class="row">
 		<h2> Ratings </h2>

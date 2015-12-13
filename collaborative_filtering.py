@@ -60,14 +60,11 @@ def user_recommendations(person):
 		if other == person:
 			continue
 		sim = pearson_correlation(person,other)
-		#print ">>>>>>>",sim
+		
 
-		# ignore scores of zero or lower
 		if sim <=0: 
 			continue
 		for item in dataset[other]:
-
-			# only score movies i haven't seen yet
 			if item not in dataset[person] or dataset[person][item] == 0:
 
 			# Similrity * score
@@ -77,7 +74,7 @@ def user_recommendations(person):
 				simSums.setdefault(item,0)
 				simSums[item]+= sim
 
-		# Create the normalized list
+		
 
 	rankings = [(total/simSums[item],item) for item,total in totals.items()]
 	rankings.sort()
@@ -86,24 +83,20 @@ def user_recommendations(person):
 	recommendations_list = [recommend_item for score,recommend_item in rankings]
 	return recommendations_list
 		
-#Have to add logic to write the recommended courses to the file 'recommendations.txt'
-# print "Printing...."
-# for i in range(len(argv)):
-# 	print i,argv[i],type(argv[i])
-# print "Done.."
+
+#command line arguments => ratings dictionary and the user(to whom recommendations have to be generated)
 try:
- dict_string = argv[1]
- dataset = literal_eval(dict_string)
- username = argv[2]
+	dict_string = argv[1]
+	username = argv[2]
 except:
 	print "Wrong number of arguments"
 	quit()
-#print dataset['Toby'],type(username)
-# print type(dataset)
+print dict_string, username
+dataset = literal_eval(dict_string)
 print "Writing..."
-input_file = open('recommendations.txt','w')
+input_file = open('recommendations.txt',"w")
 if(len(user_recommendations(username)) == 0):
 	print "No recommendations for you :("
 for course in user_recommendations(username):
-  	input_file.write(course + "\n")
-# input_file.close()
+   	input_file.write(course + "\n")
+input_file.close()

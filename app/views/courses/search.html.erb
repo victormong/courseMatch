@@ -20,7 +20,7 @@
 				<% @beginner_courses.each do |course| %>
 					<div class="col-md-3">
 						<div class="thumbnail">
-							<p><%= course.key %></p>
+							<%= link_to (image_tag course.image_url, alt: "Course Image"), course_path(course)%>
 							<p><%=link_to course.name, course_path(course)%></p>
 							<br>
 						</div>
@@ -36,7 +36,7 @@
 				<% @intermediate_courses.each do |course| %>
 					<div class="col-md-3">
 						<div class="thumbnail">
-							<p><%= course.key %></p>
+							<%= link_to (image_tag course.image_url, alt: "Course Image"), course_path(course)%>
 							<p><%=link_to course.name, course_path(course)%></p>
 							<br>
 						</div>
@@ -52,7 +52,7 @@
 				<% @advanced_courses.each do |course| %>
 					<div class="col-md-3">
 						<div class="thumbnail">
-							<p><%= course.key %></p>
+							<%= link_to (image_tag course.image_url, alt: "Course Image"), course_path(course)%>
 							<p><%=link_to course.name, course_path(course)%></p>
 							<br>
 						</div>

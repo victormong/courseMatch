@@ -2,9 +2,10 @@
 	<h2>Recommendations for <%= @user.username %></h2>
 	<!-- p>User id: <%= @user.id %> </p>
 	<p> Email: <%= @user.email %> </p> -->
-	<!--<p><%= @ratings_seen %></p> -->
+	<!-- <p><%= @ratings_seen %></p> -->
 	
-
+	
+	<% unless @courses.length == 0 %>
 	<div class="container">
 		<div class="row">
 			<% @courses.each do |course| %>
@@ -19,6 +20,29 @@
 				</div>
 			<% end %>
 		</div>
-	
 	</div>
+
+	<% else %>
+
+	<h2>No recommendations for you yet :(</h2>
+	
+	<% unless @popular_courses.nil? %>
+	<div class="container">
+	<p>Check out some of the popular courses available on the web</p>
+		<div class="row">
+			<% @popular_courses.each do |course| %>
+				<div class="col-md-3">
+					<div class="thumbnail">
+						<%= image_tag course.image_url, alt: "Course Image" %>
+						<div class="caption">
+							<p><%=link_to course.name, course_path(course)%></p>
+						</div>
+						<br>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+	<% end %>
+	<% end %>
 </div>
