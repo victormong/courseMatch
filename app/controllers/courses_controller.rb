@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   before_filter :authenticate_user! , only: [:recommendations]
 
   def search
-    if params[:search].present? 
+    if params[:search].present?
 
       @beginner_courses = Course.search(params[:search], where: {level: "beginner"},order: {_score: :desc})
       @intermediate_courses = Course.search(params[:search], where: {level: "intermediate"},order: {_score: :desc})
@@ -12,12 +12,11 @@ class CoursesController < ApplicationController
     else
       @courses = Course.all.order('random()')
     end
-
   end
+
   def index
   	@courses = Course.all.paginate(page: params[:page])
   end
-
 
   def show
   	@course = Course.friendly.find(params[:id])
@@ -43,12 +42,12 @@ class CoursesController < ApplicationController
         @@user_data[@user_who_rated.username][@rated_course.name] = rating.rate.to_f
     end
     @ratings_seen = @@user_data
-    
+
+    dict = @ratings_seen.to_s
+
     #@ratings_seen is a nested hash.To convert it into a python dictionary,replace every hash_rocket with colon using GSUB
-    dict = @ratings_seen.to_s.gsub("=>",":")
     user = @user.username
-    #system("python collaborative_filtering.py dict user")
-    system("python collaborative_filtering.py #{dict} #{user}")
+    `python collaborative_filtering.py #{dict} #{user}`
 
 
     #Read from recommendations.txt and find the courses to recommend
@@ -68,10 +67,11 @@ class CoursesController < ApplicationController
     #  @popular_courses << rating.course
     #end
   end
+end
 
   private
 
-  def import 
+  def import
     Course.import(params[:file])
     redirect_to root_url, notice: "Data added to database"
   end
